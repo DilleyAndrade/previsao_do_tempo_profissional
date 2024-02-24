@@ -6,7 +6,7 @@ interface MapProps{
 
 export default function Map({cityName}:MapProps) {
   const [dataMap, setDataMap] = useState<any>()
-/*
+
   useEffect(()=>{
     const fetchBBox = async () =>{
       try{
@@ -19,8 +19,7 @@ export default function Map({cityName}:MapProps) {
     }
     fetchBBox()
   })
-  */
- 
+  
   return (
     <div>
       {dataMap && (
@@ -32,11 +31,6 @@ export default function Map({cityName}:MapProps) {
           ></iframe>
         </div>
       )}
-      <iframe
-        width="525"
-        height="290"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-35.20465850830079%2C-8.197897975919583%2C-34.75147247314454%2C-7.886167512139393&amp;layer=mapnik"
-      ></iframe>
     </div>
   )
 }

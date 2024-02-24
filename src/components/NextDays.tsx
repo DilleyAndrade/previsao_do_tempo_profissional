@@ -46,8 +46,8 @@ export default function NextDays({cityNameNextDays}:NextDaysProps) {
                 nextDays[5].weather[0].description === 'broken clouds' && '/icons/brokenClouds.png' ||
                 nextDays[5].weather[0].description === 'scattered clouds' && '/icons/scatteredCloudsDay.png'
               }
-              maxTemp={Number(nextDays[5].main.temp_max).toFixed()}
-              minTemp={Number(nextDays[5].main.temp_min).toFixed()}
+              maxTemp={Number(nextDays[5].main.temp_max - 273.15).toFixed()}
+              minTemp={Number(nextDays[5].main.temp_min - 273.15).toFixed()}
               weekDay="SEGUNDA"
             />
 
@@ -71,8 +71,8 @@ export default function NextDays({cityNameNextDays}:NextDaysProps) {
                 nextDays[13].weather[0].description === 'broken clouds' && '/icons/brokenClouds.png' ||
                 nextDays[13].weather[0].description === 'scattered clouds' && '/icons/scatteredCloudsDay.png'
               }
-              maxTemp={Number(nextDays[13].main.temp_max).toFixed()}
-              minTemp={Number(nextDays[13].main.temp_min).toFixed()}
+              maxTemp={Number(nextDays[13].main.temp_max - 273.15).toFixed()}
+              minTemp={Number(nextDays[13].main.temp_min - 273.15).toFixed()}
               weekDay="TERÇA"
             />
 
@@ -96,8 +96,8 @@ export default function NextDays({cityNameNextDays}:NextDaysProps) {
                 nextDays[21].weather[0].description === 'broken clouds' && '/icons/brokenClouds.png' ||
                 nextDays[21].weather[0].description === 'scattered clouds' && '/icons/scatteredCloudsDay.png'
               }
-              maxTemp={Number(nextDays[21].main.temp_max).toFixed()}
-              minTemp={Number(nextDays[21].main.temp_min).toFixed()}
+              maxTemp={Number(nextDays[21].main.temp_max - 273.15).toFixed()}
+              minTemp={Number(nextDays[21].main.temp_min - 273.15).toFixed()}
               weekDay="QUARTA"
             />
 
@@ -121,8 +121,8 @@ export default function NextDays({cityNameNextDays}:NextDaysProps) {
                 nextDays[29].weather[0].description === 'broken clouds' && '/icons/brokenClouds.png' ||
                 nextDays[29].weather[0].description === 'scattered clouds' && '/icons/scatteredCloudsDay.png'
               }
-              maxTemp={Number(nextDays[29].main.temp_max).toFixed()}
-              minTemp={Number(nextDays[29].main.temp_min).toFixed()}
+              maxTemp={Number(nextDays[29].main.temp_max - 273.15).toFixed()}
+              minTemp={Number(nextDays[29].main.temp_min - 273.15).toFixed()}
               weekDay="QUINTA"
             />
 
@@ -146,8 +146,8 @@ export default function NextDays({cityNameNextDays}:NextDaysProps) {
                 nextDays[37].weather[0].description === 'broken clouds' && '/icons/brokenClouds.png' ||
                 nextDays[37].weather[0].description === 'scattered clouds' && '/icons/scatteredCloudsDay.png'
               }
-              maxTemp={Number(nextDays[37].main.temp_max).toFixed()}
-              minTemp={Number(nextDays[37].main.temp_min).toFixed()}
+              maxTemp={Number(nextDays[37].main.temp_max - 273.15).toFixed()}
+              minTemp={Number(nextDays[37].main.temp_min - 273.15).toFixed()}
               weekDay="SEXTA"
             />
           </div>
