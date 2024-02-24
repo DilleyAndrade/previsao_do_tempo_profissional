@@ -1,113 +1,148 @@
-import Image from "next/image";
+'use client'
+
+import Interface from "@/components/Interface";
+import { KEY } from "@/data/data";
+import { useEffect, useState } from "react";
+import { ptBR } from "date-fns/locale";
+import { format } from "date-fns/format";
+import Map from "@/components/Map";
+import NextDays from "@/components/NextDays";
+
 
 export default function Home() {
+
+  const [weather, setWeather] = useState<any>()
+  const [city, setCity] = useState('recife')
+  const [newCity, setNewCity] = useState('')
+  const [metric, setMetric] = useState('metric')
+  const [windSpeedType, setWindSpeedType] = useState('m/s')
+  const [temperatureType, setTemperatureType] = useState('°C')
+  const [metricSelected, setMetricSelected] = useState(true)
+  const [imperialSelected, setImperialSelected] = useState(false)
+  const API_KEY = KEY
+
+  const date = format(new Date(), 'MMM dd', {
+    locale: ptBR
+  })
+
+  const atualHour = format(new Date(), "hh':'mm ", {
+    locale: ptBR
+  })
+
+  useEffect(()=>{
+    if(metric === 'metric'){
+      setTemperatureType('°C')
+      setWindSpeedType('m/s')
+    }else if(metric === 'imperial'){
+      setTemperatureType('°F')
+      setWindSpeedType('mph')
+    }
+  },[metric])
+
+  useEffect(()=>{
+    const fetchData = async ()=> {
+      try{
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&lang=pt_br&units=${metric}`)
+        const data = await response.json()
+        setWeather(data)
+        
+      }catch(error){
+        console.error('Failed to fetch data Informations!', error)
+      }
+    }
+    fetchData()
+  })
+
+  function changeCity(e:any){
+    e.preventDefault()
+    setCity(newCity)
+    setNewCity('')
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <>
+    <header className="px-60 py-6 bg-gray-300 flex justify-between">
+      <form onSubmit={changeCity} className="flex">
+        <input 
+          onChange={(e)=>{setNewCity(e.target.value)}}
+          className="h-8 rounded-l-md px-2 outline-none text-black"
+          type="text"
+          placeholder="Pesquisar cidade"
+          value={newCity}
         />
+        <button
+          className="bg-gray-900 text-white rounded-r-md px-2"
+        >
+          Pesquisar
+        </button>
+      </form>
+      <div className="flex gap-2 bg-gray-400 max-w-max p-1 rounded-sm text-gray-700">
+
+        <button 
+          onClick={()=>(setMetric('metric'), setMetricSelected(true), setImperialSelected(false))} 
+          className={metricSelected ? 'bg-white rounded-sm p-1 text-xs' : 'text-xs hover:bg-white rounded-sm p-1 duration-100'}
+        >
+          Métrica: °C, m/s
+        </button>
+        
+        <button
+          onClick={()=>(setMetric('imperial'), setImperialSelected(true), setMetricSelected(false))} 
+          className={imperialSelected ? 'bg-white rounded-sm p-1 text-xs' : 'text-xs hover:bg-white rounded-sm p-1 duration-100'}  
+        >
+          Imperial: °F, mph
+        </button>
+
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </header>
+    
+      <main className="flex justify-between px-60 mt-8">
+        {weather && (
+          <Interface
+            dayMonth={date}
+            hour={atualHour}
+            cityName={weather.name}
+            countryName={weather.sys.country}
+            imageIcon={
+              weather.weather[0].main === 'Thunderstorm' && '/icons/thunderStorm.png' ||
+              weather.weather[0].main === 'Drizzle' && '/icons/showerRain.png' ||
+              weather.weather[0].main === 'Rain' && '/icons/rainDay.png' ||
+              weather.weather[0].main === 'Snow' && '/icons/snow.png' ||
+              weather.weather[0].main === 'Mist' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Smoke' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Haze' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Dust' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Fog' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Sand' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Ash' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Squall' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Tornado' && '/icons/mist.png' ||
+              weather.weather[0].main === 'Clear' && '/icons/clearSkyDay.png' ||
+              weather.weather[0].description === 'algumas nuvens' && '/icons/fewCloudsDay.png' ||
+              weather.weather[0].description === 'nublado' && '/icons/brokenClouds.png' ||
+              weather.weather[0].description === 'nuvens dispersas' && '/icons/scatteredCloudsDay.png'
+            }
+            temperature={Number(weather.main.temp).toFixed()}
+            typeTemperature={temperatureType}
+            maxTemp={Number(weather.main.temp_max).toFixed()}
+            minTemp={Number(weather.main.temp_min).toFixed()}
+            description={weather.weather[0].description}
+            fellLike={Number(weather.main.feels_like).toFixed()}
+            weatherStatus={weather.weather[0].description}
+            windSpeed={weather.wind.speed}
+            typeWindSpeed={windSpeedType}
+            pressure={weather.main.pressure}
+            humidity={weather.main.humidity}
+          />
+        )}
+        <Map 
+          cityName={city}
+        />
+      </main>
+      <footer>
+        <NextDays 
+          cityNameNextDays={city}
+        />
+      </footer>
+    </>
   );
 }
