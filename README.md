@@ -1,8 +1,6 @@
 <h1>Previsão do tempo (Desafio Front-End Júnior)</h1>
 <h4>
-    A aplicação utiliza uma API de previsão do tempo para obter dados meteorológicos em tempo real. Ela é capaz de fornecer informações como temperatura, umidade, velocidade do vento, e previsão para os próximos dias. A interface é amigável e fácil de usar, permitindo que os usuários obtenham informações meteorológicas detalhadas com apenas alguns cliques.
-
-    Além das informações básicas, a aplicação também oferece recursos adicionais, como mapas interativos, gráficos de tendência e alertas meteorológicos. Esses recursos visam melhorar a experiência do usuário e fornecer dados mais abrangentes para auxiliar na tomada de decisões relacionadas ao clima.
+    A aplicação utiliza uma API de previsão do tempo para obter dados meteorológicos em tempo real. Ela é capaz de fornecer informações como temperatura, umidade, velocidade do vento, e previsão para os próximos dias. A interface é amigável e fácil de usar, permitindo que os usuários obtenham informações meteorológicas detalhadas com apenas alguns cliques. Além das informações básicas, a aplicação também oferece recursos adicionais, como mapas interativos, gráficos de tendência e alertas meteorológicos. Esses recursos visam melhorar a experiência do usuário e fornecer dados mais abrangentes para auxiliar na tomada de decisões relacionadas ao clima.
 </h4>
 <hr/>
 <img src="/public/thumb.jpg">
