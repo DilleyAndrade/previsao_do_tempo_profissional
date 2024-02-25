@@ -19,6 +19,8 @@ export default function Map({cityName}:MapProps) {
     }
     fetchBBox()
   })
+
+
   
   return (
     <div>
@@ -31,6 +33,13 @@ export default function Map({cityName}:MapProps) {
           ></iframe>
         </div>
       )}
+      <iframe 
+        className="DeletarNoFinal"
+        width="525" 
+        height="290" 
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-34.90854263305665%2C-8.072741697865775%2C-34.875669479370124%2C-8.045887076946821&amp;layer=mapnik" 
+      >
+      </iframe>
     </div>
   )
 }
