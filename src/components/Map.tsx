@@ -20,8 +20,6 @@ export default function Map({cityName}:MapProps) {
     fetchBBox()
   })
 
-
-  
   return (
     <div>
       {dataMap && (
